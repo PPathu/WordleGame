@@ -21,7 +21,7 @@ const Header = ({ onNewGame, disabled = false }) => {
         title={disabled ? "Finish the current game first" : "Start a new game"}
         aria-disabled={disabled}
       >
-        New Game
+        Play Again
       </button>
     </header>
   );

@@ -1,70 +1,15 @@
-// List of 5-letter words for the Wordle game
-const words = [
-  'apple', 'beach', 'chair', 'dance', 'eagle', 'flame', 'globe', 'heart', 'image', 'juice',
-  'kings', 'lemon', 'music', 'noble', 'ocean', 'piano', 'queen', 'royal', 'sugar', 'tiger',
-  'unity', 'video', 'water', 'xenon', 'yacht', 'zebra', 'cloud', 'dream', 'faith', 'green',
-  'house', 'ivory', 'jelly', 'knife', 'light', 'metal', 'night', 'olive', 'paint', 'quick',
-  'river', 'storm', 'table', 'umbrella', 'value', 'world', 'young', 'zesty', 'brave', 'crisp',
-  'about', 'above', 'actor', 'adapt', 'admin', 'admit', 'adopt', 'adult', 'after', 'again',
-  'agent', 'agree', 'ahead', 'alarm', 'album', 'alert', 'alive', 'allow', 'alone', 'along',
-  'alter', 'among', 'anger', 'angle', 'angry', 'anime', 'ankle', 'annoy', 'antic', 'anvil',
-  'apart', 'apple', 'apply', 'arena', 'argue', 'arise', 'armor', 'array', 'arrow', 'asset',
-  'avert', 'avoid', 'award', 'aware', 'awful', 'bacon', 'badge', 'badly', 'baked', 'baker',
-  'basic', 'basis', 'batch', 'beard', 'beast', 'begin', 'begun', 'being', 'below', 'bench',
-  'berry', 'bilge', 'billy', 'binge', 'bingo', 'birch', 'birth', 'black', 'blade', 'blame',
-  'blank', 'blast', 'blaze', 'bleak', 'blend', 'bless', 'blind', 'blink', 'bloat', 'block',
-  'blood', 'bloom', 'blown', 'bluff', 'blunt', 'blurb', 'blurt', 'blush', 'board', 'boast',
-  'bonus', 'boost', 'booth', 'borax', 'borne', 'bosom', 'bossy', 'bound', 'brace', 'braid',
-  'brain', 'brake', 'brand', 'brass', 'brave', 'brawl', 'brawn', 'bread', 'break', 'brick',
-  'bride', 'brief', 'bring', 'brink', 'brisk', 'broad', 'broil', 'brood', 'brook', 'broom',
-  'brown', 'brunt', 'brush', 'brute', 'build', 'built', 'bulge', 'bulky', 'bully', 'bunch',
-  'bunny', 'burly', 'burnt', 'burst', 'cabin', 'cache', 'cadet', 'camel', 'canal', 'candy',
-  'canny', 'canoe', 'canon', 'caper', 'carve', 'catch', 'cause', 'cease', 'cedar', 'cello',
-  'chair', 'champ', 'chant', 'chaos', 'charm', 'chart', 'chase', 'cheap', 'cheat', 'check',
-  'cheek', 'cheer', 'chess', 'chest', 'chick', 'chief', 'child', 'chill', 'chime', 'china',
-  'chirp', 'choke', 'chord', 'chore', 'chuck', 'chunk', 'churn', 'cider', 'cigar', 'cinch',
-  'cited', 'civic', 'civil', 'claim', 'clamp', 'clang', 'clash', 'clasp', 'class', 'clean',
-  'clear', 'cleat', 'cleft', 'clerk', 'click', 'cliff', 'climb', 'cling', 'clink', 'cloak',
-  'clock', 'clone', 'close', 'cloth', 'cloud', 'clout', 'clove', 'clown', 'cluck', 'clump',
-  'clung', 'coach', 'coast', 'cobra', 'codec', 'colon', 'color', 'comic', 'comma', 'conch',
-  'condo', 'coral', 'corny', 'couch', 'cough', 'could', 'count', 'court', 'cover', 'covet',
-  'crack', 'craft', 'cramp', 'crane', 'crank', 'crash', 'crass', 'crate', 'crave', 'crawl',
-  'creak', 'cream', 'creed', 'creek', 'creep', 'cress', 'crest', 'crick', 'crime', 'crimp',
-  'crisp', 'croak', 'crock', 'crone', 'crony', 'crook', 'cross', 'crowd', 'crown', 'crude',
-  'cruel', 'crumb', 'crush', 'crust', 'crypt', 'cubic', 'curly', 'curry', 'curse', 'curve',
-  'cycle', 'daily', 'dairy', 'daisy', 'dance', 'dandy', 'dared', 'dated', 'daunt', 'dealt',
-  'death', 'debug', 'debut', 'decal', 'decay', 'decor', 'decoy', 'defer', 'deign', 'deity',
-  'delay', 'delta', 'delve', 'demur', 'denim', 'dense', 'depot', 'depth', 'derby', 'deter',
-  'detox', 'deuce', 'devil', 'diary', 'dicey', 'digit', 'diner', 'dingy', 'dirty', 'disco',
-  'ditch', 'ditto', 'ditty', 'diver', 'dizzy', 'dodge', 'dodgy', 'dogma', 'doing', 'dolly',
-  'donor', 'donut', 'doubt', 'dough', 'dowdy', 'dowel', 'downy', 'dozen', 'draft', 'drain',
-  'drake', 'drama', 'drank', 'drawl', 'drawn', 'dread', 'dream', 'dress', 'dried', 'drift',
-  'drill', 'drink', 'drive', 'droop', 'drove', 'drown', 'drunk', 'dusty', 'dwarf', 'dwell',
-  'eager', 'eagle', 'early', 'earth', 'easel', 'eaten', 'eater', 'ebony', 'eclat', 'edict',
-  'edify', 'eerie', 'egret', 'eider', 'eight', 'elate', 'elbow', 'elder', 'elect', 'elfin',
-  'elite', 'elope', 'elude', 'email', 'embed', 'ember', 'emcee', 'empty', 'enact', 'endow',
-  'enema', 'enemy', 'enjoy', 'ennui', 'ensue', 'enter', 'entry', 'envoy', 'epoch', 'epoxy',
-  'equal', 'equip', 'erase', 'erect', 'ergot', 'erode', 'error', 'erupt', 'essay', 'ester',
-  'ether', 'ethic', 'ethos', 'etude', 'evade', 'event', 'every', 'evict', 'evoke', 'exact',
-  'exalt', 'excel', 'exert', 'exile', 'exist', 'expel', 'extol', 'extra', 'exult', 'fable',
-  'faced', 'facet', 'faddy', 'faded', 'faint', 'fairy', 'faith', 'false', 'famed', 'fancy',
-  'fanny', 'farce', 'fatal', 'fatty', 'fault', 'fauna', 'feast', 'feign', 'feint', 'fella',
-  'felon', 'femme', 'femur', 'fence', 'feral', 'ferry', 'fetal', 'fetch', 'fetid', 'fetus',
-  'fever', 'fiber', 'field', 'fiend', 'fiery', 'fifth', 'fifty', 'fight', 'filer', 'filet',
-  'filly', 'filmy', 'filth', 'final', 'finch', 'first', 'fishy', 'fiver', 'fixed', 'fizzy',
-  'fjord', 'flack', 'flair', 'flake', 'flaky', 'flame', 'flank', 'flare', 'flash', 'flask',
-  'fleck', 'fleet', 'flesh', 'flick', 'flier', 'fling', 'flint', 'flirt', 'float', 'flock',
-  'flood', 'floor', 'flora', 'floss', 'flour', 'flout', 'flown', 'fluff', 'fluid', 'fluke',
-  'flume', 'flung', 'flunk', 'flush', 'flute', 'flyer', 'foamy', 'focal', 'focus', 'foggy',
-  'folio', 'folly', 'foray', 'force', 'forge', 'forgo', 'forte', 'forth', 'forty', 'forum',
-  'found', 'foyer', 'frail', 'frame', 'frank', 'fraud', 'freak', 'fresh', 'friar', 'fried',
-  'frill', 'frisk', 'fritz', 'frock', 'frond', 'front', 'frost', 'froth', 'frown', 'froze',
-  'fruit', 'fudge', 'fugue', 'fully', 'funky', 'funny', 'furor', 'furry', 'fussy', 'futon',
-  'fuzzy', 'gadget', 'gaily', 'gamer', 'gamma', 'gamut', 'gassy', 'gauge', 'gaunt', 'gauze',
-  'gavel', 'gawky', 'gayer', 'gayly', 'gazer', 'gecko', 'geeky', 'geese', 'genie', 'genre',
-  'ghost', 'ghoul', 'giant', 'giddy', 'gimpy', 'girly', 'girth', 'given', 'giver', 'glare',
-  'glass', 'glaze', 'gleam', 'glean', 'glide', 'glint', 'gloat', 'globe', 'gloom', 'glory',
-  'gloss', 'glove', 'glyph', 'gnash', 'gnome', 'godly', 'golem', 'golly', 'gonad', 'goner'
-];
+const fs = require('fs');
+const path = require('path');
+
+const csvPath = path.join(__dirname, 'words.csv');
+const wordsData = fs.readFileSync(csvPath, 'utf8');
+
+// Parse CSV (one word per line) and filter for only 5-letter words
+const words = wordsData
+  .split('\n')
+  .map(word => word.trim())
+  .filter(word => word !== '' && word.length === 5); 
+
+console.log(`Loaded ${words.length} 5-letter words from CSV`);
 
 module.exports = words; 
