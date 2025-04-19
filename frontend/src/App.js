@@ -4,6 +4,7 @@ import Header from './components/Header';
 import Grid from './components/Grid';
 import Keyboard from './components/Keyboard';
 import GameOver from './components/GameOver';
+import Toast from './components/Toast';
 import { fetchNewGame, submitGuess, validateWord } from './services/api';
 
 function App() {
@@ -15,13 +16,21 @@ function App() {
     won: false,
     targetWord: ''
   });
-  const [error, setError] = useState('');
+  const [toast, setToast] = useState({ message: '', type: 'error' });
   const [isLoading, setIsLoading] = useState(false);
+
+  // Clear toast message
+  const clearToast = () => setToast({ message: '', type: 'error' });
+
+  // Show toast message
+  const showToast = (message, type = 'error') => {
+    setToast({ message, type });
+  };
 
   // Start a new game
   const startNewGame = async () => {
     setIsLoading(true);
-    setError('');
+    clearToast();
     try {
       const data = await fetchNewGame();
       setGameId(data.gameId);
@@ -32,8 +41,9 @@ function App() {
         won: false,
         targetWord: ''
       });
+      showToast('New game started!', 'success');
     } catch (err) {
-      setError('Failed to start a new game');
+      showToast('Failed to start a new game');
       console.error(err);
     } finally {
       setIsLoading(false);
@@ -43,19 +53,19 @@ function App() {
   // Submit the current guess
   const handleSubmitGuess = async () => {
     if (currentGuess.length !== 5) {
-      setError('Word must be 5 letters');
+      showToast('Word must be 5 letters');
       return;
     }
 
     setIsLoading(true);
-    setError('');
+    clearToast();
     
     try {
       // First validate the word
       const validationResult = await validateWord(currentGuess);
       
       if (!validationResult.valid) {
-        setError('Not a valid word');
+        showToast('Not a valid word');
         setIsLoading(false);
         return;
       }
@@ -76,9 +86,13 @@ function App() {
           won: result.won,
           targetWord: result.targetWord
         });
+        
+        if (result.won) {
+          showToast(`Correct! You guessed it in ${result.guessCount} ${result.guessCount === 1 ? 'try' : 'tries'}!`, 'success');
+        }
       }
     } catch (err) {
-      setError(err.message || 'Failed to submit guess');
+      showToast(err.message || 'Failed to submit guess');
       console.error(err);
     } finally {
       setIsLoading(false);
@@ -93,10 +107,10 @@ function App() {
       handleSubmitGuess();
     } else if (key === 'BACKSPACE') {
       setCurrentGuess(prev => prev.slice(0, -1));
-      setError('');
+      clearToast();
     } else if (/^[A-Z]$/.test(key) && currentGuess.length < 5) {
       setCurrentGuess(prev => prev + key);
-      setError('');
+      clearToast();
     }
   };
 
@@ -125,7 +139,12 @@ function App() {
     <div className="App">
       <Header onNewGame={startNewGame} />
       
-      {error && <div className="error-message">{error}</div>}
+      <Toast 
+        message={toast.message} 
+        type={toast.type} 
+        onClose={clearToast} 
+        duration={3000}
+      />
       
       <Grid 
         guesses={guesses} 
