@@ -18,6 +18,10 @@ function App() {
   });
   const [toast, setToast] = useState({ message: '', type: 'error' });
   const [isLoading, setIsLoading] = useState(false);
+  const [gameActive, setGameActive] = useState(false);
+
+  // Check if game is in progress but not finished
+  const isGameInProgress = gameActive && !gameState.finished;
 
   // Clear toast message
   const clearToast = () => setToast({ message: '', type: 'error' });
@@ -29,6 +33,12 @@ function App() {
 
   // Start a new game
   const startNewGame = async () => {
+    // Don't allow starting a new game if one is in progress
+    if (isGameInProgress) {
+      showToast('Please finish the current game first', 'warning');
+      return;
+    }
+
     setIsLoading(true);
     clearToast();
     try {
@@ -41,6 +51,7 @@ function App() {
         won: false,
         targetWord: ''
       });
+      setGameActive(true); // Set game as active
       showToast('New game started!', 'success');
     } catch (err) {
       showToast('Failed to start a new game');
@@ -86,6 +97,7 @@ function App() {
           won: result.won,
           targetWord: result.targetWord
         });
+        setGameActive(false); // Game no longer active
         
         // Show appropriate toast for game result
         if (result.won) {
@@ -140,7 +152,7 @@ function App() {
 
   return (
     <div className="App">
-      <Header onNewGame={startNewGame} />
+      <Header onNewGame={startNewGame} disabled={isGameInProgress} />
       
       <Toast 
         message={toast.message} 
