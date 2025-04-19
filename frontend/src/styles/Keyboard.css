@@ -24,16 +24,17 @@
   border-radius: 4px;
   font-size: 14px;
   font-weight: bold;
-  background-color: #d3d6da;
+  background-color: var(--keyboard-bg);
   border: none;
-  color: #1a1a1b;
+  color: var(--key-text);
   cursor: pointer;
   user-select: none;
   flex: 1;
+  transition: background-color 0.3s, color 0.3s;
 }
 
 .key:hover {
-  background-color: #c6c9cd;
+  filter: brightness(0.9);
 }
 
 .key:active {
@@ -47,17 +48,17 @@
 
 /* Key states based on guess results */
 .key.correct {
-  background-color: #6aaa64;
+  background-color: var(--toast-success-bg);
   color: white;
 }
 
 .key.present {
-  background-color: #c9b458;
+  background-color: var(--toast-warning-bg);
   color: white;
 }
 
 .key.absent {
-  background-color: #787c7e;
+  background-color: var(--cell-filled-border);
   color: white;
 }
 

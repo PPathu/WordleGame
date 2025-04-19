@@ -1,7 +1,7 @@
 import React from 'react';
 import '../styles/Header.css';
 
-const Header = ({ onNewGame, disabled = false }) => {
+const Header = ({ onNewGame, disabled = false, darkMode, onToggleTheme }) => {
   // Handler for the button click that respects the disabled state
   const handleNewGameClick = (e) => {
     if (disabled) {
@@ -13,7 +13,19 @@ const Header = ({ onNewGame, disabled = false }) => {
 
   return (
     <header className="header">
+      <div className="header-left">
+        <button 
+          className="theme-toggle" 
+          onClick={onToggleTheme}
+          aria-label={`Switch to ${darkMode ? 'light' : 'dark'} mode`}
+          title={`Switch to ${darkMode ? 'light' : 'dark'} mode`}
+        >
+          {darkMode ? '☀️' : '🌙'}
+        </button>
+      </div>
+      
       <h1 className="title">Wordle</h1>
+      
       <button 
         className={`new-game-btn ${disabled ? 'disabled' : ''}`} 
         onClick={handleNewGameClick}

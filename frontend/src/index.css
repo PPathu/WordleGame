@@ -1,3 +1,46 @@
+:root {
+  /* Light theme (default) */
+  --background: #f9f9f9;
+  --text-color: #1a1a1b;
+  --border-color: #d3d6da;
+  --cell-empty-bg: transparent;
+  --cell-filled-border: #878a8c;
+  --header-bg: #ffffff;
+  --keyboard-bg: #d3d6da;
+  --key-bg: #ffffff;
+  --key-text: #1a1a1b;
+  --toast-bg: #ffffff;
+  --toast-text: #1a1a1b;
+  --toast-border: #d3d6da;
+  --toast-success-bg: #6aaa64;
+  --toast-success-text: white;
+  --toast-error-bg: #ff4d4d;
+  --toast-error-text: white;
+  --toast-warning-bg: #f5c16c;
+  --toast-warning-text: #1a1a1b;
+}
+
+[data-theme="dark"] {
+  --background: #121213;
+  --text-color: #ffffff;
+  --border-color: #3a3a3c;
+  --cell-empty-bg: transparent;
+  --cell-filled-border: #565758;
+  --header-bg: #121213;
+  --keyboard-bg: #818384;
+  --key-bg: #818384;
+  --key-text: #ffffff;
+  --toast-bg: #272729;
+  --toast-text: #ffffff;
+  --toast-border: #3a3a3c;
+  --toast-success-bg: #538d4e;
+  --toast-success-text: white;
+  --toast-error-bg: #c53737;
+  --toast-error-text: white;
+  --toast-warning-bg: #b59f3b;
+  --toast-warning-text: white;
+}
+
 body {
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
@@ -5,9 +48,17 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  background-color: var(--background);
+  color: var(--text-color);
+  transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
+}
+
+/* Add a smooth transition for all elements */
+* {
+  transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
 }

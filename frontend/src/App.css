@@ -6,6 +6,8 @@
   min-height: 100vh;
   display: flex;
   flex-direction: column;
+  background-color: var(--background);
+  color: var(--text-color);
 }
 
 .App-logo {
@@ -20,14 +22,14 @@
 }
 
 .App-header {
-  background-color: #282c34;
+  background-color: var(--header-bg);
   min-height: 100vh;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   font-size: calc(10px + 2vmin);
-  color: white;
+  color: var(--text-color);
 }
 
 .App-link {
@@ -44,7 +46,7 @@
 }
 
 .error-message {
-  color: #d72c2c;
+  color: var(--toast-error-text);
   font-weight: bold;
   margin: 10px 0;
   padding: 8px;
@@ -61,6 +63,6 @@
 }
 
 body {
-  background-color: #f9f9f9;
+  background-color: var(--background);
   margin: 0;
 }

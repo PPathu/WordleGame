@@ -19,6 +19,23 @@ function App() {
   const [toast, setToast] = useState({ message: '', type: 'error' });
   const [isLoading, setIsLoading] = useState(false);
   const [gameActive, setGameActive] = useState(false);
+  const [darkMode, setDarkMode] = useState(
+    window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches
+  );
+
+  // Apply dark mode class to the document
+  useEffect(() => {
+    if (darkMode) {
+      document.documentElement.setAttribute('data-theme', 'dark');
+    } else {
+      document.documentElement.removeAttribute('data-theme');
+    }
+  }, [darkMode]);
+
+  // Toggle dark mode
+  const toggleDarkMode = () => {
+    setDarkMode(!darkMode);
+  };
 
   // Check if game is in progress but not finished
   const isGameInProgress = gameActive && !gameState.finished;
@@ -156,7 +173,12 @@ function App() {
 
   return (
     <div className="App">
-      <Header onNewGame={startNewGame} disabled={isGameInProgress} />
+      <Header 
+        onNewGame={startNewGame} 
+        disabled={isGameInProgress} 
+        darkMode={darkMode}
+        onToggleTheme={toggleDarkMode}
+      />
       
       <Toast 
         message={toast.message} 

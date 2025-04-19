@@ -1,23 +1,28 @@
 .header {
-  display: flex;
-  justify-content: space-between;
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
   align-items: center;
   padding: 10px 20px;
-  border-bottom: 1px solid #d3d6da;
-  background-color: #ffffff;
+  border-bottom: 1px solid var(--border-color);
+  background-color: var(--header-bg);
+}
+
+.header-left {
+  justify-self: start;
 }
 
 .title {
   font-size: 36px;
   font-weight: 700;
   margin: 0;
-  color: #1a1a1b;
+  color: var(--text-color);
   letter-spacing: 0.2px;
+  text-align: center;
 }
 
 .new-game-btn {
-  background-color: #6aaa64;
-  color: white;
+  background-color: var(--toast-success-bg);
+  color: var(--toast-success-text);
   border: none;
   border-radius: 4px;
   padding: 10px 16px;
@@ -25,10 +30,11 @@
   font-weight: bold;
   cursor: pointer;
   transition: all 0.3s;
+  justify-self: end;
 }
 
 .new-game-btn:hover {
-  background-color: #538d4e;
+  filter: brightness(0.9);
 }
 
 .new-game-btn.disabled,
@@ -43,9 +49,28 @@
   text-decoration: line-through;
 }
 
+/* Theme toggle button */
+.theme-toggle {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 24px;
+  color: var(--text-color);
+  padding: 5px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.3s;
+}
+
+.theme-toggle:hover {
+  transform: rotate(15deg);
+}
+
 @media (max-width: 500px) {
   .header {
     padding: 10px;
+    grid-template-columns: 40px auto 80px; /* Adjust column widths for small screens */
   }
   
   .title {
@@ -55,5 +80,9 @@
   .new-game-btn {
     padding: 8px 12px;
     font-size: 12px;
+  }
+  
+  .theme-toggle {
+    font-size: 20px;
   }
 } 
