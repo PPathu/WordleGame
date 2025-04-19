@@ -92,6 +92,23 @@
   }
 }
 
+/* Animation for popping effect when typing */
+.cell.pop {
+  animation: pop 0.15s ease-in-out forwards;
+}
+
+@keyframes pop {
+  0% {
+    transform: scale(0.8);
+  }
+  50% {
+    transform: scale(1.1);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
 /* Responsive design for smaller screens */
 @media (max-width: 500px) {
   .grid {
