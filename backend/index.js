@@ -1,5 +1,6 @@
 const express = require('express');
 const cors = require('cors');
+const words = require('./data/words');
 
 const app = express();
 const PORT = process.env.PORT || 5000;
@@ -7,20 +8,6 @@ const PORT = process.env.PORT || 5000;
 // Middleware
 app.use(cors());
 app.use(express.json());
-
-// Word list - 5 letter words
-const words = [
-  'apple', 'beach', 'chair', 'dance', 'eagle', 
-  'flame', 'globe', 'heart', 'image', 'juice',
-  'kings', 'lemon', 'music', 'noble', 'ocean',
-  'piano', 'queen', 'royal', 'sugar', 'tiger',
-  'unity', 'video', 'water', 'xenon', 'yacht',
-  'zebra', 'cloud', 'dream', 'faith', 'green',
-  'house', 'ivory', 'jelly', 'knife', 'light',
-  'metal', 'night', 'olive', 'paint', 'quick',
-  'river', 'storm', 'table', 'umbrella', 'value',
-  'world', 'young', 'zesty', 'brave', 'crisp'
-];
 
 // Store active games
 const games = {};
