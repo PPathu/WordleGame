@@ -74,6 +74,24 @@
   }
 }
 
+/* Animation for spinning cells on correct guess */
+.cell.spin {
+  animation: spin 1s ease-in-out forwards;
+  transform-origin: center;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotateY(0deg) scale(1);
+  }
+  50% {
+    transform: rotateY(180deg) scale(1.2);
+  }
+  100% {
+    transform: rotateY(360deg) scale(1);
+  }
+}
+
 /* Responsive design for smaller screens */
 @media (max-width: 500px) {
   .grid {

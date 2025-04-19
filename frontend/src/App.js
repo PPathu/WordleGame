@@ -84,9 +84,13 @@ function App() {
       // Submit the guess
       const result = await submitGuess(gameId, currentGuess);
       
+      // Check if this guess is correct (all correct letters)
+      const isCorrect = result.evaluation.every(evalItem => evalItem.status === 'correct');
+      
       setGuesses([...guesses, { 
         word: currentGuess, 
-        evaluation: result.evaluation 
+        evaluation: result.evaluation,
+        isCorrect: isCorrect  // Mark if this guess is correct
       }]);
       
       setCurrentGuess('');

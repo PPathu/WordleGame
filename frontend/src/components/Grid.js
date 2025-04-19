@@ -8,18 +8,21 @@ const Grid = ({ guesses, currentGuess, maxGuesses }) => {
   return (
     <div className="grid">
       {/* Rows for previous guesses */}
-      {guesses.map((guess, index) => (
-        <div className="row" key={`guess-${index}`}>
-          {guess.evaluation.map((evalItem, letterIndex) => (
-            <div 
-              className={`cell ${evalItem.status}`} 
-              key={`guess-${index}-${letterIndex}`}
-            >
-              {evalItem.letter.toUpperCase()}
-            </div>
-          ))}
-        </div>
-      ))}
+      {guesses.map((guess, index) => {
+        return (
+          <div className="row" key={`guess-${index}`}>
+            {guess.evaluation.map((evalItem, letterIndex) => (
+              <div 
+                className={`cell ${evalItem.status} ${guess.isCorrect ? 'spin' : ''}`} 
+                key={`guess-${index}-${letterIndex}`}
+                style={guess.isCorrect ? { animationDelay: `${letterIndex * 0.1}s` } : {}}
+              >
+                {evalItem.letter.toUpperCase()}
+              </div>
+            ))}
+          </div>
+        );
+      })}
       
       {/* Row for current guess */}
       {currentGuess && (
