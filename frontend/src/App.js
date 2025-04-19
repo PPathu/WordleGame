@@ -87,8 +87,11 @@ function App() {
           targetWord: result.targetWord
         });
         
+        // Show appropriate toast for game result
         if (result.won) {
-          showToast(`Correct! You guessed it in ${result.guessCount} ${result.guessCount === 1 ? 'try' : 'tries'}!`, 'success');
+          showToast(`Congratulations! You guessed "${result.targetWord.toUpperCase()}" in ${result.guessCount} ${result.guessCount === 1 ? 'try' : 'tries'}!`, 'success');
+        } else {
+          showToast(`Game over! The word was "${result.targetWord.toUpperCase()}"`, 'warning');
         }
       }
     } catch (err) {
@@ -143,7 +146,7 @@ function App() {
         message={toast.message} 
         type={toast.type} 
         onClose={clearToast} 
-        duration={3000}
+        duration={5000}
       />
       
       <Grid 
