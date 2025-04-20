@@ -27,7 +27,7 @@
 
 .target-word {
   font-size: 16px;
-  margin-bottom: 25px;
+  margin-bottom: 15px;
   color: var(--text-color);
 }
 
@@ -36,6 +36,30 @@
   font-size: 24px;
   letter-spacing: 1px;
   color: var(--toast-success-bg);
+}
+
+.streak-display {
+  font-size: 16px;
+  margin-bottom: 25px;
+  color: var(--text-color);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.streak-value {
+  display: inline-block;
+  margin-left: 10px;
+  font-weight: bold;
+  font-size: 22px;
+  color: var(--toast-success-bg);
+  background-color: var(--background);
+  border-radius: 50%;
+  width: 34px;
+  height: 34px;
+  line-height: 34px;
+  text-align: center;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 .play-again-btn {
@@ -80,5 +104,17 @@
   
   .word {
     font-size: 20px;
+  }
+  
+  .streak-display {
+    font-size: 14px;
+    margin-bottom: 20px;
+  }
+  
+  .streak-value {
+    font-size: 18px;
+    width: 28px;
+    height: 28px;
+    line-height: 28px;
   }
 } 

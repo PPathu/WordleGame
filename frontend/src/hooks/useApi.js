@@ -1,7 +1,9 @@
 import { useState, useCallback } from 'react';
 
-// Force the API URL to be the correct one
-const API_URL = 'https://wordle-backend-lewg.onrender.com/api';
+// Update API URL to use the local backend server
+const API_URL = process.env.NODE_ENV === 'production' 
+  ? 'https://wordle-backend-lewg.onrender.com/api'
+  : 'http://localhost:5001/api';
 
 const useApi = () => {
   const [loading, setLoading] = useState(false);

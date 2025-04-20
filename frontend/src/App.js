@@ -7,6 +7,15 @@ import GameOver from './components/GameOver';
 import Toast from './components/Toast';
 import useApi from './hooks/useApi';
 
+// Simple welcome component
+const Welcome = ({ onStartGame }) => (
+  <div className="welcome">
+    <h2>Welcome to Wordle!</h2>
+    <p>Guess the 5-letter word in six tries.</p>
+    <button className="play-btn" onClick={onStartGame}>Start Game</button>
+  </div>
+);
+
 function App() {
   const { fetchNewGame, submitGuess, validateWord, loading: apiLoading, error: apiError } = useApi();
   const [gameId, setGameId] = useState(null);
@@ -20,6 +29,7 @@ function App() {
   const [toast, setToast] = useState({ message: '', type: 'error' });
   const [isLoading, setIsLoading] = useState(false);
   const [gameActive, setGameActive] = useState(false);
+  const [streak, setStreak] = useState(0);
   const [darkMode, setDarkMode] = useState(
     window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches
   );
@@ -133,7 +143,13 @@ function App() {
           won: result.won,
           targetWord: result.targetWord
         });
-        setGameActive(false); // Game no longer active
+        
+        // Update streak count if won, reset if lost
+        if (result.won) {
+          setStreak(prev => prev + 1);
+        } else {
+          setStreak(0);
+        }
         
         // Show appropriate toast for game result
         if (result.won) {
@@ -165,9 +181,10 @@ function App() {
     }
   };
 
-  // Start a new game on component mount
+  // Remove the automatic game start on component mount
   useEffect(() => {
-    startNewGame();
+    // Don't start a game automatically
+    showToast('Welcome to Wordle! Click "Play" to start a game', 'success');
   }, []);
 
   // Process physical keyboard input
@@ -193,6 +210,8 @@ function App() {
         disabled={isGameInProgress} 
         darkMode={darkMode}
         onToggleTheme={toggleDarkMode}
+        gameActive={gameActive}
+        streak={streak}
       />
       
       <Toast 
@@ -202,25 +221,32 @@ function App() {
         duration={5000}
       />
       
-      <Grid 
-        guesses={guesses} 
-        currentGuess={currentGuess} 
-        maxGuesses={6}
-      />
-      
-      {gameState.finished ? (
-        <GameOver 
-          won={gameState.won} 
-          targetWord={gameState.targetWord}
-          guessCount={guesses.length}
-          onNewGame={startNewGame}
-        />
+      {!gameActive ? (
+        <Welcome onStartGame={startNewGame} />
       ) : (
-        <Keyboard 
-          guesses={guesses} 
-          onKeyPress={handleKeyPress} 
-          disabled={isLoading}
-        />
+        <>
+          <Grid 
+            guesses={guesses} 
+            currentGuess={currentGuess} 
+            maxGuesses={6}
+          />
+          
+          {gameState.finished ? (
+            <GameOver 
+              won={gameState.won} 
+              targetWord={gameState.targetWord}
+              guessCount={guesses.length}
+              streak={streak}
+              onNewGame={startNewGame}
+            />
+          ) : (
+            <Keyboard 
+              guesses={guesses} 
+              onKeyPress={handleKeyPress} 
+              disabled={isLoading}
+            />
+          )}
+        </>
       )}
     </div>
   );

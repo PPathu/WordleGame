@@ -1,7 +1,7 @@
 import React from 'react';
 import '../styles/GameOver.css';
 
-const GameOver = ({ won, targetWord, guessCount, onNewGame }) => {
+const GameOver = ({ won, targetWord, guessCount, streak, onNewGame }) => {
   return (
     <div className="game-over">
       <h2 className="game-over-title">
@@ -17,6 +17,12 @@ const GameOver = ({ won, targetWord, guessCount, onNewGame }) => {
       <p className="target-word">
         The word was: <span className="word">{targetWord.toUpperCase()}</span>
       </p>
+      
+      {won && (
+        <p className="streak-display">
+          Current streak: <span className="streak-value">{streak}</span>
+        </p>
+      )}
       
       <button className="play-again-btn" onClick={onNewGame}>
         Play Again
