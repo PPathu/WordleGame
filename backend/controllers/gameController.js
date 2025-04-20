@@ -7,9 +7,12 @@ const gameService = require('../services/gameService');
  */
 const createGame = (req, res) => {
   try {
+    console.log('Creating new game...');
     const result = gameService.createGame();
+    console.log('Game created successfully:', result.gameId);
     res.json(result);
   } catch (error) {
+    console.error('Error creating game:', error.message);
     res.status(500).json({ error: error.message });
   }
 };
@@ -74,11 +77,20 @@ const getGameState = (req, res) => {
 const validateWord = (req, res) => {
   const { word } = req.params;
   
+  console.log(`Validating word: "${word}"`);
+  
   try {
+    if (!word || word.length !== 5) {
+      console.log('Invalid word length');
+      return res.status(400).json({ valid: false, error: 'Word must be 5 letters' });
+    }
+    
     const valid = gameService.isValidWord(word);
+    console.log(`Word "${word}" is ${valid ? 'valid' : 'invalid'}`);
     res.json({ valid });
   } catch (error) {
-    res.status(500).json({ error: 'Internal server error' });
+    console.error('Error validating word:', error);
+    res.status(500).json({ error: 'Internal server error', valid: false });
   }
 };
 

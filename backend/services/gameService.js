@@ -17,7 +17,17 @@ function getRandomWord() {
  * @returns {boolean} True if the word is valid
  */
 function isValidWord(word) {
-  return words.includes(word.toLowerCase());
+  const normalizedWord = word.toLowerCase().trim();
+  const isValid = words.includes(normalizedWord);
+  
+  console.log(`Checking if "${normalizedWord}" is in dictionary of ${words.length} words: ${isValid}`);
+  
+  // If not valid, log the first 10 words in the dictionary for debugging
+  if (!isValid) {
+    console.log(`First 10 words in dictionary: ${words.slice(0, 10).join(', ')}`);
+  }
+  
+  return isValid;
 }
 
 /**

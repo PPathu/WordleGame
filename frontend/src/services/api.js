@@ -1,4 +1,4 @@
-const API_URL = 'http://localhost:5001/api';
+import { API_URL } from '../config';
 
 // Fetch error handler
 const handleResponse = async (response) => {

@@ -2,19 +2,30 @@ services:
   - type: web
     name: wordle-backend
     env: node
+    region: oregon
     buildCommand: cd backend && npm install
-    startCommand: cd backend && npm start
+    startCommand: cd backend && node index.js
+    healthCheckPath: /
+    autoDeploy: true
     envVars:
       - key: PORT
         value: 5001
       - key: NODE_ENV
         value: production
+      - key: CORS_ORIGIN
+        value: https://wordle-frontend.onrender.com
 
   - type: web
     name: wordle-frontend
     env: static
-    buildCommand: cd frontend && npm install && npm run build
+    buildCommand: |
+      cd frontend
+      npm install
+      REACT_APP_API_URL=https://wordle-backend-lewg.onrender.com/api npm run build
     staticPublishPath: frontend/build
+    autoDeploy: true
     envVars:
+      - key: NODE_ENV
+        value: production
       - key: REACT_APP_API_URL
-        value: https://wordle-backend.onrender.com 
+        value: https://wordle-backend-lewg.onrender.com/api 

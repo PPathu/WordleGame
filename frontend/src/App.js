@@ -5,9 +5,10 @@ import Grid from './components/Grid';
 import Keyboard from './components/Keyboard';
 import GameOver from './components/GameOver';
 import Toast from './components/Toast';
-import { fetchNewGame, submitGuess, validateWord } from './services/api';
+import useApi from './hooks/useApi';
 
 function App() {
+  const { fetchNewGame, submitGuess, validateWord, loading: apiLoading, error: apiError } = useApi();
   const [gameId, setGameId] = useState(null);
   const [guesses, setGuesses] = useState([]);
   const [currentGuess, setCurrentGuess] = useState('');
@@ -31,6 +32,18 @@ function App() {
       document.documentElement.removeAttribute('data-theme');
     }
   }, [darkMode]);
+
+  // Display API errors as toast
+  useEffect(() => {
+    if (apiError) {
+      showToast(apiError, 'error');
+    }
+  }, [apiError]);
+
+  // Update loading state based on API loading
+  useEffect(() => {
+    setIsLoading(apiLoading);
+  }, [apiLoading]);
 
   // Toggle dark mode
   const toggleDarkMode = () => {
@@ -90,9 +103,11 @@ function App() {
     
     try {
       // First validate the word
+      console.log('Validating word:', currentGuess);
       const validationResult = await validateWord(currentGuess);
+      console.log('Validation result:', validationResult);
       
-      if (!validationResult.valid) {
+      if (!validationResult || !validationResult.valid) {
         showToast('Not a valid word');
         setIsLoading(false);
         return;
