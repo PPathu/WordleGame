@@ -27,6 +27,15 @@ const processGuess = (req, res) => {
   const { guess } = req.body;
   
   try {
+    // Get the game first to log the target word
+    const game = gameService.getGame(id);
+    if (game) {
+      console.log('----------------------------------------');
+      console.log(`📝 GUESS ATTEMPT: "${guess}" for game ${id}`);
+      console.log(`🎯 CURRENT TARGET WORD: "${game.targetWord.toUpperCase()}"`);
+      console.log('----------------------------------------');
+    }
+    
     const result = gameService.processGuess(id, guess);
     res.json(result);
   } catch (error) {
@@ -56,6 +65,14 @@ const getGameState = (req, res) => {
     if (!game) {
       return res.status(404).json({ error: 'Game not found' });
     }
+    
+    // Log the current game state and target word
+    console.log('----------------------------------------');
+    console.log(`🔍 GAME STATE REQUEST for game ${id}`);
+    console.log(`🎯 TARGET WORD: "${game.targetWord.toUpperCase()}"`);
+    console.log(`📊 GUESSES: ${game.guesses.length}`);
+    console.log(`🏁 FINISHED: ${game.finished}`);
+    console.log('----------------------------------------');
     
     res.json({
       guesses: game.guesses,
