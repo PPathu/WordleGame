@@ -138,6 +138,23 @@ function processGuess(gameId, guess) {
   if (isCorrect || game.guesses.length >= 6) {
     game.finished = true;
     game.won = isCorrect;
+    
+    // Log game results in a highly visible way
+    if (isCorrect) {
+      console.log('\n');
+      console.log('🎉🎉🎉🎉🎉🎉🎉🎉🎉🎉🎉🎉🎉🎉🎉🎉🎉');
+      console.log(`🏆 PLAYER WON! WORD: ${game.targetWord.toUpperCase()}`);
+      console.log(`🔢 GUESSES USED: ${game.guesses.length} of 6`);
+      console.log('🎉🎉🎉🎉🎉🎉🎉🎉🎉🎉🎉🎉🎉🎉🎉🎉🎉');
+      console.log('\n');
+    } else {
+      console.log('\n');
+      console.log('❌❌❌❌❌❌❌❌❌❌❌❌❌❌❌❌❌');
+      console.log(`💔 GAME OVER! WORD WAS: ${game.targetWord.toUpperCase()}`);
+      console.log(`🔢 PLAYER USED ALL ${game.guesses.length} GUESSES`);
+      console.log('❌❌❌❌❌❌❌❌❌❌❌❌❌❌❌❌❌');
+      console.log('\n');
+    }
   }
   
   // Return response
