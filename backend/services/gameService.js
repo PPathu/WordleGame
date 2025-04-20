@@ -73,8 +73,11 @@ function createGame() {
   const gameId = Date.now().toString();
   const targetWord = getRandomWord();
   
-  // Log the target word to the console for debugging
-  console.log(`New game created with ID: ${gameId}, target word: ${targetWord}`);
+  // Enhanced console logging for the target word
+  console.log('\n======================================');
+  console.log(`🎯 TARGET WORD: ${targetWord.toUpperCase()} 🎯`);
+  console.log(`Game ID: ${gameId}`);
+  console.log('======================================\n');
   
   games[gameId] = {
     targetWord,
@@ -120,8 +123,8 @@ function processGuess(gameId, guess) {
     throw new Error('Not a valid word');
   }
   
-  // Log the guess and target word
-  console.log(`Game ${gameId}: Guess "${guess}" | Target word: "${game.targetWord}"`);
+  // Enhanced log for target word during guesses
+  console.log(`Game ${gameId}: Guess "${guess}" | 🎯 TARGET WORD: "${game.targetWord.toUpperCase()}" 🎯`);
   
   // Evaluate guess
   const evaluation = evaluateGuess(guess, game.targetWord);

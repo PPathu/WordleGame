@@ -1,7 +1,7 @@
 import React from 'react';
 import '../styles/Header.css';
 
-const Header = ({ onNewGame, disabled = false, darkMode, onToggleTheme }) => {
+const Header = ({ onNewGame, disabled = false, darkMode, onToggleTheme, gameActive = false, streak = 0 }) => {
   // Handler for the button click that respects the disabled state
   const handleNewGameClick = (e) => {
     if (disabled) {
@@ -24,7 +24,15 @@ const Header = ({ onNewGame, disabled = false, darkMode, onToggleTheme }) => {
         </button>
       </div>
       
-      <h1 className="title">Wordle</h1>
+      <div className="title-container">
+        <h1 className="title">Wordle</h1>
+        {gameActive && (
+          <div className="streak-counter">
+            <span className="streak-label">Streak:</span>
+            <span className="streak-count">{streak}</span>
+          </div>
+        )}
+      </div>
       
       <button 
         className={`new-game-btn ${disabled ? 'disabled' : ''}`} 
@@ -33,7 +41,7 @@ const Header = ({ onNewGame, disabled = false, darkMode, onToggleTheme }) => {
         title={disabled ? "Finish the current game first" : "Start a new game"}
         aria-disabled={disabled}
       >
-        Play Again
+        {gameActive ? "Play Again" : "Play"}
       </button>
     </header>
   );
