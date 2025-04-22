@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import './App.css';
 import Header from './components/Header';
 import Grid from './components/Grid';
@@ -6,6 +6,7 @@ import Keyboard from './components/Keyboard';
 import GameOver from './components/GameOver';
 import Toast from './components/Toast';
 import useApi from './hooks/useApi';
+
 
 // Simple welcome component
 const Welcome = ({ onStartGame }) => (
@@ -17,6 +18,10 @@ const Welcome = ({ onStartGame }) => (
 );
 
 function App() {
+  const [timer, setTimer] = useState(0);
+  const [isTimerRunning, setIsTimerActive] = useState(false);
+  const timerInterval = useRef(null);
+
   const { fetchNewGame, submitGuess, validateWord, loading: apiLoading, error: apiError } = useApi();
   const [gameId, setGameId] = useState(null);
   const [guesses, setGuesses] = useState([]);
@@ -33,6 +38,26 @@ function App() {
   const [darkMode, setDarkMode] = useState(
     window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches
   );
+
+  const startTimer = () => {
+    setTimer(0);
+    setIsTimerActive(true);
+    if (timerInterval.current) clearInterval(timerInterval.current);
+    timerInterval.current = setInterval(() => {
+      setTimer(prev => prev + 1);
+    }, 1000);
+  };
+
+  const stopTimer = () => {
+    setIsTimerActive(false);
+    if (timerInterval.current) clearInterval(timerInterval.current);
+  };
+
+  useEffect(() => {
+    return () => {
+      if (timerInterval.current) clearInterval(timerInterval.current);
+    };
+  }, []);
 
   // Apply dark mode class to the document
   useEffect(() => {
@@ -99,7 +124,18 @@ function App() {
     } finally {
       setIsLoading(false);
     }
+
+    startTimer(0);
+    setIsTimerActive(false);
+    if (timerInterval.current) clearInterval(timerInterval.current);
+    setTimeout(startTimer, 500);
   };
+
+  useEffect(() => {
+    if (gameState.finished) {
+      stopTimer();
+    }
+  }, [gameState.finished]);
 
   // Submit the current guess
   const handleSubmitGuess = async () => {
@@ -225,6 +261,11 @@ function App() {
         <Welcome onStartGame={startNewGame} />
       ) : (
         <>
+          {isGameInProgress && (
+            <div style={{ fontSize: '18px', margin: '10px', color: '#888'}}>
+              Time: {formatTime(timer)}
+            </div>
+          )}
           <Grid 
             guesses={guesses} 
             currentGuess={currentGuess} 
@@ -238,6 +279,7 @@ function App() {
               guessCount={guesses.length}
               streak={streak}
               onNewGame={startNewGame}
+              time={timer}
             />
           ) : (
             <Keyboard 
@@ -250,6 +292,12 @@ function App() {
       )}
     </div>
   );
+}
+
+function formatTime(seconds) {
+  const minutes = Math.floor(seconds / 60);
+  const remainingSeconds = seconds % 60;
+  return `${minutes}:${remainingSeconds.toString().padStart(2, '0')}`;
 }
 
 export default App;
